@@ -1,87 +1,91 @@
 # SDMG
 
-SDMG是一个用于立场驱动的多模态回复生成和评估的框架，集成了多种大型语言模型的能力。
+SDMG is a framework for Stance-Driven Multimodal Reply Generation and Evaluation, integrating the capabilities of various large language models.
 
-## 项目概述
+## Project Overview
 
-SDMG旨在利用先进的语言模型和多模态模型，进行立场驱动的内容生成、分析和评估。本项目介绍了立场驱动的多模态回复生成任务，目标是根据社交媒体上包含文本和视觉信息的帖子，生成立场一致的评论。
+SDMG aims to leverage advanced language models and multimodal models for stance-driven content generation, analysis, and evaluation. This project introduces the stance-driven multimodal reply generation task, which focuses on generating stance-consistent comments based on social media posts containing both text and visual information.
 
-主要特点：
-- 支持多种模型，包括Qwen（通义千问）、LLaVA（多模态大语言模型）、GPT系列模型
-- 提供StanceGen2024数据集，包含2024年美国总统选举中的推文-图像/视频对及立场标注的用户评论
-- 提出SDMG（Stance-Driven Multimodal Generation）框架，集成多模态特征的加权融合和立场引导
-- 支持多种评估方法，包括相似度（COS）和困惑度（PPL）评估
+Key Features:
+1. Supports multiple models, including Qwen (Tongyi Qianwen), LLaVA (Large Language and Vision Assistant), and the GPT series.
+2. Provides the StanceGen2024 dataset, featuring tweet-image/video pairs and user comments with stance annotations from the 2024 U.S. presidential election.
+3. Proposes the SDMG (Stance-Driven Multimodal Generation) framework, integrating multimodal feature fusion and stance guidance.
+4. Supports multiple evaluation methods, including cosine similarity (COS) and perplexity (PPL).
 
-## 项目结构
+
+## Project Structure
 
 
 ```
-├── cos_test.py          # 相似度评估工具 
-├── g_one.py             # GPT系列单样本推理
-├── g_test.py            # GPT系列模型测试
-├── g4_one.py            # GPT-4o模型单样本推理
-├── g4_test.py           # GPT-4o模型测试
-├── ppl_test.py          # 困惑度评估工具
-├── qwen_one.py          # Qwen模型单样本推理
-├── qwen_test.py         # Qwen模型测试
-├── qwen_vl.py           # Qwen视觉语言模型工具
-├── stance_test.py       # 立场可控性评估工具
-├── dataset/             # 数据集目录
-│   ├── finetune_with_local_images.json        # 带本地图像的微调数据
-│   └── harris_finetune_with_local_images.json # Harris数据集微调文件
-└── LLaVA/               # LLaVA模型相关代码
-    ├── eval_dataset.py  # 普通方法
-    ├── eval_one.py      # 单样本评估
-    ├── eval_test.py     # 测试评估
-    ├── eval_weightfusion.py # 权重融合方法
-    ├── predict.py       # 预测脚本
-    └── requirements.txt # LLaVA依赖项
+├── cos_test.py          # Cosine similarity evaluation tool
+├── g_one.py             # Single-sample inference with GPT models
+├── g_test.py            # GPT model testing script
+├── g4_one.py            # Single-sample inference with GPT-4o model
+├── g4_test.py           # GPT-4o model testing script
+├── ppl_test.py          # Perplexity evaluation tool
+├── qwen_one.py          # Single-sample inference with Qwen model
+├── qwen_test.py         # Qwen model testing script
+├── qwen_vl.py           # Qwen vision-language model utilities
+├── stance_test.py       # Stance controllability evaluation tool
+├── dataset/             # Dataset directory
+│   ├── finetune_with_local_images.json        # Fine-tuning data with local images
+│   └── harris_finetune_with_local_images.json # Harris dataset fine-tuning file
+└── LLaVA/               # LLaVA model related scripts
+    ├── eval_dataset.py  # Dataset evaluation
+    ├── eval_one.py      # Single-sample evaluation
+    ├── eval_test.py     # Evaluation testing script
+    ├── eval_weightfusion.py # Weighted fusion evaluation
+    ├── predict.py       # Prediction script
+    └── requirements.txt # LLaVA dependencies
 ```
 
-## 安装与设置
+## Installation and Setup
 
-1. 克隆仓库
+
+1. Clone the repository
 ```bash
 git clone https://github.com/yourusername/StanceGen.git
 cd StanceGen
 ```
 
-2. 安装依赖
+2. Install dependencies
 ```bash
 pip install -r requirements.txt
-# 如果要使用LLaVA模型，还需要安装其依赖
+# If you plan to use the LLaVA model, install its dependencies as well:
 pip install -r LLaVA/requirements.txt
 ```
 
-## 使用方法
+## Usage
 
-### 批量测试
+### Batch Testing
 
 ```bash
-# Qwen模型测试
+# Run Qwen model testing
 python qwen_test.py --dataset ./dataset/your_test_dataset.json
 
-# 立场测试
+# Run stance controllability testing
 python stance_test.py --model qwen --dataset ./dataset/your_stance_dataset.json
+
 ```
 
-### LLaVA模型评估
+### Model Evaluation
 
 ```bash
-# 评估LLaVA模型
+# Evaluate LLaVA model
 cd LLaVA
 python eval_test.py --model-path /path/to/model --dataset ../dataset/harris_finetune_with_local_images.json
 
-# 权重融合评估
+# Weighted fusion evaluation
 python eval_weightfusion.py --model-path /path/to/model --dataset ../dataset/your_dataset.json
+
 ```
 
 
 ## StanceGen2024数据集
 
-StanceGen2024是一个新的数据集，包含2024年美国总统选举中的推文-图像/视频对及立场标注的用户评论。该数据集捕捉了丰富的多模态交互，并包含立场和风格的细粒度标签，使研究人员能够深入研究多模态政治内容如何塑造立场表达。
+The StanceGen2024 dataset is a newly curated dataset that contains tweet-image/video pairs and stance-annotated user comments from the 2024 U.S. presidential election. It captures rich multimodal interactions and includes fine-grained stance and style labels, providing valuable resources for researchers to explore how multimodal political content shapes stance expression.
 
-项目包含多个数据集文件，位于`dataset/`目录下：
-- `harris_finetune_with_local_images.json`: Trump数据集的微调文件
-- `harris_finetune_with_local_images.json`: Harris数据集的微调文件
+The dataset files are located in the dataset/ directory:
+- `harris_finetune_with_local_images.json`: Fine-tuning file for the Trump dataset
+- `harris_finetune_with_local_images.json`: Fine-tuning file for the Harris dataset
 
