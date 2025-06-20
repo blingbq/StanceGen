@@ -81,7 +81,7 @@ python eval_weightfusion.py --model-path /path/to/model --dataset ../dataset/you
 ```
 
 
-## StanceGen2024数据集
+## StanceGen2024 Dataset
 
 The StanceGen2024 dataset is a newly curated dataset that contains tweet-image/video pairs and stance-annotated user comments from the 2024 U.S. presidential election. It captures rich multimodal interactions and includes fine-grained stance and style labels, providing valuable resources for researchers to explore how multimodal political content shapes stance expression.
 
